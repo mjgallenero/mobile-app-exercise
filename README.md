@@ -1,6 +1,6 @@
 # mobile-app-exercise
 
-This application is implemented to utilize the Flickr Search API and show the results in a 3-column scollable view.
+This application is implemented to utilize the Flickr Search API and show the results in a 3-column scrollable view.
 It is developed in Kotlin language and followed the MVVM software architecture pattern. 
 
 A SearchView is used for the input UI. This is where the user will input the search keyword and upon submitting, the request will be sent.

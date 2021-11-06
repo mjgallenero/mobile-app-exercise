@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -82,6 +83,15 @@ class SearchPhotoFragment : Fragment(), SearchView.OnQueryTextListener {
             }
             progressBar.visibility = View.INVISIBLE
             isLoadingMoreImages = false
+        })
+
+        // observe if there is an error during the search
+        searchViewModel.hasErrorEncountered().observe(viewLifecycleOwner, Observer { hasError ->
+            if (hasError) {
+                Toast.makeText(context, "An error occurred.", Toast.LENGTH_LONG).show()
+                progressBar.visibility = View.INVISIBLE
+                // Todo: For future improvements, add some additional UI to show error messages
+            }
         })
     }
 

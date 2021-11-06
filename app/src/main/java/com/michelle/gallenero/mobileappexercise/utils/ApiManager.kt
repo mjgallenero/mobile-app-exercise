@@ -3,10 +3,12 @@ package com.michelle.gallenero.mobileappexercise.utils
 import com.michelle.gallenero.mobileappexercise.model.SearchPhotoResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.util.concurrent.TimeUnit
 
 interface ApiManager {
     companion object {
@@ -17,7 +19,12 @@ interface ApiManager {
         fun getInstance(): ApiManager {
             return Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(OkHttpClient().newBuilder().addInterceptor(HttpLoggingInterceptor()).build())
+                .client(OkHttpClient()
+                    .newBuilder()
+                    .connectTimeout(
+                        10L,
+                        TimeUnit.SECONDS)
+                    .addInterceptor(HttpLoggingInterceptor()).build())
                 .build()
                 .create(ApiManager::class.java)
         }
@@ -30,5 +37,5 @@ interface ApiManager {
     suspend fun searchImages(
         @Query("text") text: String,
         @Query("page") page: Int? = 1
-    ): SearchPhotoResponse
+    ): Response<SearchPhotoResponse>
 }
